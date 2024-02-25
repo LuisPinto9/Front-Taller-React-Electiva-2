@@ -39,7 +39,7 @@ const Form = () => {
   return (
     <>
       <Button
-        label="Show"
+        label="add Client"
         icon="pi pi-external-link"
         onClick={() => setVisible(true)}
       />
