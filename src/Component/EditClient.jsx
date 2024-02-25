@@ -1,53 +1,60 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
-import { InputText } from "primereact/inputtext";
 import { InputNumber } from "primereact/inputnumber";
+import { InputText } from "primereact/inputtext";
 
-const Form = ({setFlag}) => {
+const EditClient = ({ rowData, setFlag }) => {
   const [visible, setVisible] = useState(false);
   const [id, setID] = useState(0);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
 
-  const saveClient = () => {
-    console.log(`id: ${id} name: ${name} email: ${email} phone: ${phone}`);
-    let mutuation = `mutation CreateClient($createClientId: ID!, $name: String!, $celphone: String, $email: String) {
-        createClient(id: $createClientId, name: $name, celphone: $celphone, email: $email) {
-          name
-          id
-          email
-          celphone
-        }
-      }`;
+  useEffect(() => {
+    setID(rowData.id)
+    setPhone(rowData.celphone);
+    setName(rowData.name);
+    setEmail(rowData.email)
+  }, []);
 
-      fetch("http://localhost:4000/graphql",{
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json"
-        },
-        body: JSON.stringify({
-            query: mutuation,
-            variables: {createClientId: id, name: name, celphone: phone, email: email}
-        })
-      }).then(respuesta=> respuesta.json())
-      .then((result)=> {
-        alert(result.data)
-        setFlag(true)
+  const EditClient = () => {
+
+    let mutuation = `mutation UpdateClient($updateClientId2: ID!, $updateClientName3: String, $updateClientCelphone3: String, $updateClientEmail3: String) {
+      updateClient(id: $updateClientId2, name: $updateClientName3, celphone: $updateClientCelphone3, email: $updateClientEmail3) {
+        id
+        email
+        celphone
+        name
+      }
+    }`;
+
+    fetch("http://localhost:4000/graphql",{
+      method: "POST",
+      headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json"
+      },
+      body: JSON.stringify({
+          query: mutuation,
+          variables: {updateClientId2: id, updateClientName3: name, updateClientCelphone3: phone, updateClientEmail3: email}
       })
-      .catch(error => alert(error))
-      
+    }).then(respuesta=> respuesta.json())
+    .then((result)=> {
+      alert(result.data)
+      setFlag(true)
+    })
+    .catch(error => alert(error))
+
   };
   return (
-    <>
+    <div className="card flex justify-content-center">
       <Button
-        label="add Client"
-        icon="pi pi-plus"
+        label="Edit"
+        icon="pi pi-user-edit"
+        severity="warning"
         onClick={() => setVisible(true)}
       />
-      {/**Abre modal*/}
       <Dialog
         header="Header"
         visible={visible}
@@ -59,10 +66,7 @@ const Form = ({setFlag}) => {
         <div className="card flex flex-column md:flex-row gap-3">
           <div className="p-inputgroup flex-1">
             <span className="p-inputgroup-addon">ID</span>
-            <InputNumber
-              placeholder="ID"
-              onChange={(e) => setID(e.value)}
-            />
+            <InputNumber placeholder="ID" value={rowData.id} disabled/>
           </div>
 
           <div className="p-inputgroup flex-1">
@@ -70,7 +74,7 @@ const Form = ({setFlag}) => {
               <i className="pi pi-user"></i>
             </span>
             <InputText
-              placeholder="Username"
+              value={name}
               onChange={(e) => setName(e.target.value)}
             />
           </div>
@@ -80,7 +84,7 @@ const Form = ({setFlag}) => {
               <i className="pi pi-google"></i>
             </span>
             <InputText
-              placeholder="email"
+              value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
@@ -90,21 +94,21 @@ const Form = ({setFlag}) => {
               <i className="pi pi-phone"></i>
             </span>
             <InputText
-              placeholder="Celular"
+              value={phone}
               onChange={(e) => setPhone(e.target.value)}
             />
           </div>
         </div>
         <Button
-          label="aceptar"
-          icon="pi pi-check"
-          onClick={() => saveClient()}
+          label="editar"
+          icon="pi pi-user-edit"
+          severity="warning"
+          onClick={() => EditClient()}
         />
         {/**End Form */}
       </Dialog>
-      {/**Cierra Modal */}
-    </>
+    </div>
   );
 };
 
-export default Form;
+export default EditClient;

@@ -3,8 +3,9 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
+import EditClient from "./EditClient";
 
-const Table = () => {
+const Table = ({flag,setFlag}) => {
   const [client, setClient] = useState([]);
   const [reservation, setReservation] = useState([]);
   const [visible, setVisible] = useState(false);
@@ -46,6 +47,7 @@ const Table = () => {
           });
         setClient(result.data.getAllClient);
       });
+      setFlag(false);
   };
 
   const loadReservation = (row) => {
@@ -56,7 +58,7 @@ const Table = () => {
 
   useEffect(() => {
     loadClient();
-  }, []);
+  }, [flag]);
 
   return (
     <div className="card">
@@ -71,11 +73,15 @@ const Table = () => {
               body={(rowData) => (
                 <Button
                   label="Reservaciones"
-                  icon="pi pi-external-link"
+                  icon="pi pi-search"
                   onClick={() => loadReservation(rowData)}
                 />
               )}
             ></Column>
+            <Column  header="Editar"
+              body={(rowData) => (
+                <EditClient rowData={rowData} setFlag={setFlag}/>
+              )}></Column>
         </DataTable>
         {/**Dialog del modal */}
         <Dialog
