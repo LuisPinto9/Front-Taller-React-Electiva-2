@@ -58,7 +58,7 @@ const Table = ({flag,setFlag}) => {
 
   useEffect(() => {
     loadClient();
-  }, [flag]);
+  }, [client]);
 
   return (
     <div className="card">

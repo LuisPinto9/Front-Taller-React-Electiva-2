@@ -1,9 +1,7 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
+import React from "react";
+import ReactDOM from "react-dom/client";
 import "primereact/resources/themes/bootstrap4-light-blue/theme.css";
-import 'primeicons/primeicons.css';
-import App from './App.jsx'
+import "primeicons/primeicons.css";
+import Router from "./routes/Router";
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-    <App />
-)
+ReactDOM.createRoot(document.getElementById("root")).render(<Router />);
