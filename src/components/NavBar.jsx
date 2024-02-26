@@ -1,16 +1,22 @@
 import React from "react";
 import { Menubar } from "primereact/menubar";
+import "primereact/resources/themes/saga-blue/theme.css";
+import "primereact/resources/primereact.min.css";
+import "primeicons/primeicons.css";
 
 const NavBar = () => {
   const items = [
     {
+      id: "home",
       label: "Home",
       icon: "pi pi-home",
-      url: "/"
+      url: "/",
     },
     {
+      id: "reservaciones",
       label: "Reservaciones",
-      url: "/reservaciones"
+      icon: "pi pi-link",
+      url: "/reservaciones",
     },
   ];
   return (
