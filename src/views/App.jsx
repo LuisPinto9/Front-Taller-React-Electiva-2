@@ -1,7 +1,7 @@
 import { useState } from "react";
-import DeleteClient from "./components/DeleteClient";
-import Form from "./components/Form";
-import Table from "./components/Table";
+import DeleteClient from "../components/DeleteClient";
+import Form from "../components/Form";
+import Table from "../components/Table";
 
 function App() {
   const [flag, setFlag] = useState(false);

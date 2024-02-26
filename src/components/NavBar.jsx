@@ -8,6 +8,10 @@ const NavBar = () => {
       icon: "pi pi-home",
       url: "/"
     },
+    {
+      label: "Reservaciones",
+      url: "/reservaciones"
+    },
   ];
   return (
     <div className="card">
