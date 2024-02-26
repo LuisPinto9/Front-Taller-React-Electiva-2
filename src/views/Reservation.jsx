@@ -6,9 +6,12 @@ import { Card } from "primereact/card";
 
 const Reservation = ({ setFlag }) => {
   const [id, setID] = useState(0);
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
+  const [StartDate, setStartDate] = useState("");
+  const [EndDate, setEndDate] = useState("");
+  
+  const [service, setservice] = useState("");
+  const [comments, setcomments] = useState("");
+  const [idCliente, setidCliente] = useState(0);
 
   const saveReservation = () => {
     let mutuation = `mutation($createReservationId: ID!, $bookingStartDate: String!, $bookingEndDate: String!, $service: String!, $idClient: ID!, $comments: String) {
@@ -30,10 +33,12 @@ const Reservation = ({ setFlag }) => {
       body: JSON.stringify({
         query: mutuation,
         variables: {
-          createClientId: id,
-          name: name,
-          celphone: phone,
-          email: email,
+          createReservationId:id, 
+          bookingStartDate: StartDate,
+           bookingEndDate: EndDate, 
+           service: service,
+            idClient: idCliente,
+            comments: comments,
         },
       }),
     })
@@ -58,8 +63,8 @@ const Reservation = ({ setFlag }) => {
             <i className="pi pi-user"></i>
           </span>
           <InputText
-            placeholder="Username"
-            onChange={(e) => setName(e.target.value)}
+            placeholder="StartDate"
+            onChange={(e) => setStartDate(e.target.value)}
           />
         </div>
 
@@ -68,8 +73,8 @@ const Reservation = ({ setFlag }) => {
             <i className="pi pi-google"></i>
           </span>
           <InputText
-            placeholder="email"
-            onChange={(e) => setEmail(e.target.value)}
+            placeholder="EndDate"
+            onChange={(e) => setEndDate(e.target.value)}
           />
         </div>
 
@@ -78,10 +83,32 @@ const Reservation = ({ setFlag }) => {
             <i className="pi pi-phone"></i>
           </span>
           <InputText
-            placeholder="Celular"
-            onChange={(e) => setPhone(e.target.value)}
+            placeholder="Servicio"
+            onChange={(e) => setservice(e.target.value)}
           />
         </div>
+
+        <div className="p-inputgroup flex-1">
+          <span className="p-inputgroup-addon">
+            <i className="pi pi-google"></i>
+          </span>
+          <InputText
+            placeholder="comentarios"
+            onChange={(e) => setcomments(e.target.value)}
+          />
+        </div>
+        <div className="p-inputgroup flex-1">
+          <span className="p-inputgroup-addon">
+            <i className="pi pi-phone"></i>
+          </span>
+          <InputText
+            placeholder="idCliente"
+            onChange={(e) => setidCliente(e.target.value)}
+          />
+        </div>
+
+
+
       </div>
       <div>
         <Button
