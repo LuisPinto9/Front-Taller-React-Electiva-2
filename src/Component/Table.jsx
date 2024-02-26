@@ -27,7 +27,7 @@ const Table = ({flag,setFlag}) => {
         }
       }`;
 
-    fetch("http://localhost:4000/graphql", {
+    fetch("https://graph-ql-api-git-main-binmexs-projects.vercel.app/graphql", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -63,7 +63,7 @@ const Table = ({flag,setFlag}) => {
   return (
     <div className="card">
       <div className="card">
-        <DataTable value={client} tableStyle={{ minWidth: "50rem" }}>
+        <DataTable value={client} tableStyle={{ minWidth: "50rem" }}sortField="id" sortOrder={1}>
           <Column field="id" header="Code"></Column>
           <Column field="name" header="Name"></Column>
           <Column field="email" header="email"></Column>
@@ -92,7 +92,7 @@ const Table = ({flag,setFlag}) => {
           onHide={() => setVisible(false)}
         >
         {/**Table modal */}
-          <DataTable value={reservation} tableStyle={{ minWidth: "50rem" }}>
+          <DataTable value={reservation} tableStyle={{ minWidth: "50rem" }} > 
           <Column field="id" header="idReservation"></Column>
             <Column field="bookingStartDate" header="bookingStartDate"></Column>
             <Column field="bookingEndDate" header="bookingEndDate"></Column>

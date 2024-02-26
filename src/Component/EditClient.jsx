@@ -29,7 +29,7 @@ const EditClient = ({ rowData, setFlag }) => {
       }
     }`;
 
-    fetch("http://localhost:4000/graphql",{
+    fetch("https://graph-ql-api-git-main-binmexs-projects.vercel.app/graphql",{
       method: "POST",
       headers: {
           "Content-Type": "application/json",
