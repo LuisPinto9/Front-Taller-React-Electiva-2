@@ -5,7 +5,7 @@ import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import EditClient from "./EditClient";
 
-const Table = ({flag,setFlag}) => {
+const Table = ({ flag, setFlag }) => {
   const [client, setClient] = useState([]);
   const [reservation, setReservation] = useState([]);
   const [visible, setVisible] = useState(false);
@@ -39,49 +39,60 @@ const Table = ({flag,setFlag}) => {
     })
       .then((respuesta) => respuesta.json())
       .then((result) => {
-        result.data.getAllClient.forEach(client => {
-            client.reservations.forEach(reservation => {
-              reservation.bookingStartDate = new Date(parseInt(reservation.bookingStartDate)).toLocaleDateString();
-              reservation.bookingEndDate = new Date(parseInt(reservation.bookingEndDate)).toLocaleDateString();
-            });
+        result.data.getAllClient.forEach((client) => {
+          client.reservations.forEach((reservation) => {
+            reservation.bookingStartDate = new Date(
+              parseInt(reservation.bookingStartDate)
+            ).toLocaleDateString();
+            reservation.bookingEndDate = new Date(
+              parseInt(reservation.bookingEndDate)
+            ).toLocaleDateString();
           });
+        });
         setClient(result.data.getAllClient);
       });
-      setFlag(false);
+    setFlag(false);
   };
 
   const loadReservation = (row) => {
     console.log(row.reservations);
-    setReservation(row.reservations)
-    setVisible(true)
-  }
+    setReservation(row.reservations);
+    setVisible(true);
+  };
 
   useEffect(() => {
     loadClient();
-  }, [client]);
+  }, [flag]);
 
   return (
     <div className="card">
       <div className="card">
-        <DataTable value={client} tableStyle={{ minWidth: "50rem" }}sortField="id" sortOrder={1}>
+        <DataTable
+          value={client}
+          tableStyle={{ minWidth: "50rem" }}
+          sortField="id"
+          sortOrder={1}
+        >
           <Column field="id" header="Code"></Column>
           <Column field="name" header="Name"></Column>
           <Column field="email" header="email"></Column>
           <Column field="celphone" header="celphone"></Column>
           <Column
-              header="Reservations"
-              body={(rowData) => (
-                <Button
-                  label="Reservaciones"
-                  icon="pi pi-search"
-                  onClick={() => loadReservation(rowData)}
-                />
-              )}
-            ></Column>
-            <Column  header="Editar"
-              body={(rowData) => (
-                <EditClient rowData={rowData} setFlag={setFlag}/>
-              )}></Column>
+            header="Reservations"
+            body={(rowData) => (
+              <Button
+                label="Reservaciones"
+                icon="pi pi-search"
+                onClick={() => loadReservation(rowData)}
+              />
+            )}
+          ></Column>
+          <Column
+            header="Editar"
+            body={(rowData) => (
+              <EditClient rowData={rowData} setFlag={setFlag} />
+            )}
+          ></Column>
         </DataTable>
         {/**Dialog del modal */}
         <Dialog
@@ -91,9 +102,9 @@ const Table = ({flag,setFlag}) => {
           style={{ width: "50vw" }}
           onHide={() => setVisible(false)}
         >
-        {/**Table modal */}
-          <DataTable value={reservation} tableStyle={{ minWidth: "50rem" }} > 
-          <Column field="id" header="idReservation"></Column>
+          {/**Table modal */}
+          <DataTable value={reservation} tableStyle={{ minWidth: "50rem" }}>
+            <Column field="id" header="idReservation"></Column>
             <Column field="bookingStartDate" header="bookingStartDate"></Column>
             <Column field="bookingEndDate" header="bookingEndDate"></Column>
             <Column field="comments" header="comments"></Column>
