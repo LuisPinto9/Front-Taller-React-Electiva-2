@@ -12,16 +12,15 @@ const EditClient = ({ rowData, setFlag }) => {
   const [phone, setPhone] = useState("");
 
   useEffect(() => {
-    setID(rowData.id)
+    setID(rowData.id);
     setPhone(rowData.celphone);
     setName(rowData.name);
-    setEmail(rowData.email)
+    setEmail(rowData.email);
   }, []);
 
   const EditClient = () => {
-
-    let mutuation = `mutation UpdateClient($updateClientId2: ID!, $updateClientName3: String, $updateClientCelphone3: String, $updateClientEmail3: String) {
-      updateClient(id: $updateClientId2, name: $updateClientName3, celphone: $updateClientCelphone3, email: $updateClientEmail3) {
+    let mutuation = `mutation UpdateClient($updateClientId: ID!, $updateClientName: String, $updateClientCelphone: String, $updateClientEmail: String) {
+      updateClient(id: $updateClientId, name: $updateClientName, celphone: $updateClientCelphone, email: $updateClientEmail) {
         id
         email
         celphone
@@ -29,23 +28,28 @@ const EditClient = ({ rowData, setFlag }) => {
       }
     }`;
 
-    fetch("https://graph-ql-api-git-main-binmexs-projects.vercel.app/graphql",{
+    fetch("https://graph-ql-api-two.vercel.app/graphql", {
       method: "POST",
       headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json"
+        "Content-Type": "application/json",
+        Accept: "application/json",
       },
       body: JSON.stringify({
-          query: mutuation,
-          variables: {updateClientId2: id, updateClientName3: name, updateClientCelphone3: phone, updateClientEmail3: email}
-      })
-    }).then(respuesta=> respuesta.json())
-    .then((result)=> {
-      alert(result.data)
-      setFlag(true)
+        query: mutuation,
+        variables: {
+          updateClientId: id,
+          updateClientName: name,
+          updateClientCelphone: phone,
+          updateClientEmail: email,
+        },
+      }),
     })
-    .catch(error => alert(error))
-
+      .then((respuesta) => respuesta.json())
+      .then((result) => {
+        alert(result.data);
+        setFlag(true);
+      })
+      .catch((error) => alert(error));
   };
   return (
     <div className="card flex justify-content-center">
@@ -66,17 +70,14 @@ const EditClient = ({ rowData, setFlag }) => {
         <div className="card flex flex-column md:flex-row gap-3">
           <div className="p-inputgroup flex-1">
             <span className="p-inputgroup-addon">ID</span>
-            <InputNumber placeholder="ID" value={rowData.id} disabled/>
+            <InputNumber placeholder="ID" value={rowData.id} disabled />
           </div>
 
           <div className="p-inputgroup flex-1">
             <span className="p-inputgroup-addon">
               <i className="pi pi-user"></i>
             </span>
-            <InputText
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
+            <InputText value={name} onChange={(e) => setName(e.target.value)} />
           </div>
 
           <div className="p-inputgroup flex-1">

@@ -4,11 +4,11 @@ import { InputText } from "primereact/inputtext";
 import { InputNumber } from "primereact/inputnumber";
 import { Card } from "primereact/card";
 
-const Reservation = ({ setFlag }) => {
+const Reservation = () => {
   const [id, setID] = useState(0);
   const [StartDate, setStartDate] = useState("");
   const [EndDate, setEndDate] = useState("");
-  
+
   const [service, setservice] = useState("");
   const [comments, setcomments] = useState("");
   const [idCliente, setidCliente] = useState(0);
@@ -24,7 +24,7 @@ const Reservation = ({ setFlag }) => {
         }
       }`;
 
-    fetch("https://graph-ql-api-git-main-binmexs-projects.vercel.app/graphql", {
+    fetch("https://graph-ql-api-two.vercel.app/graphql", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -33,19 +33,18 @@ const Reservation = ({ setFlag }) => {
       body: JSON.stringify({
         query: mutuation,
         variables: {
-          createReservationId:id, 
+          createReservationId: id,
           bookingStartDate: StartDate,
-           bookingEndDate: EndDate, 
-           service: service,
-            idClient: idCliente,
-            comments: comments,
+          bookingEndDate: EndDate,
+          service: service,
+          idClient: idCliente,
+          comments: comments,
         },
       }),
     })
       .then((respuesta) => respuesta.json())
       .then((result) => {
-        alert(result.data);
-        setFlag(true);
+        alert(result.data.createReservation);
       })
       .catch((error) => alert(error));
   };
@@ -106,9 +105,6 @@ const Reservation = ({ setFlag }) => {
             onChange={(e) => setidCliente(e.target.value)}
           />
         </div>
-
-
-
       </div>
       <div>
         <Button

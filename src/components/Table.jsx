@@ -27,7 +27,7 @@ const Table = ({ flag, setFlag }) => {
         }
       }`;
 
-    fetch("https://graph-ql-api-git-main-binmexs-projects.vercel.app/graphql", {
+    fetch("https://graph-ql-api-two.vercel.app/graphql", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -62,7 +62,7 @@ const Table = ({ flag, setFlag }) => {
 
   useEffect(() => {
     loadClient();
-  }, [flag]);
+  }, [client]);
 
   return (
     <div className="card">

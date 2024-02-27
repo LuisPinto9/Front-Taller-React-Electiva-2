@@ -4,7 +4,7 @@ import { Dialog } from "primereact/dialog";
 import { InputText } from "primereact/inputtext";
 import { InputNumber } from "primereact/inputnumber";
 
-const Form = ({setFlag}) => {
+const Form = ({ setFlag }) => {
   const [visible, setVisible] = useState(false);
   const [id, setID] = useState(0);
   const [name, setName] = useState("");
@@ -22,23 +22,28 @@ const Form = ({setFlag}) => {
         }
       }`;
 
-      fetch("https://graph-ql-api-git-main-binmexs-projects.vercel.app/graphql",{
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json"
+    fetch("https://graph-ql-api-two.vercel.app/graphql", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        query: mutuation,
+        variables: {
+          createClientId: id,
+          name: name,
+          celphone: phone,
+          email: email,
         },
-        body: JSON.stringify({
-            query: mutuation,
-            variables: {createClientId: id, name: name, celphone: phone, email: email}
-        })
-      }).then(respuesta=> respuesta.json())
-      .then((result)=> {
-        alert(result.data)
-        setFlag(true)
+      }),
+    })
+      .then((respuesta) => respuesta.json())
+      .then((result) => {
+        alert(result.data);
+        setFlag(true);
       })
-      .catch(error => alert(error))
-      
+      .catch((error) => alert(error));
   };
   return (
     <>
@@ -59,10 +64,7 @@ const Form = ({setFlag}) => {
         <div className="card flex flex-column md:flex-row gap-3">
           <div className="p-inputgroup flex-1">
             <span className="p-inputgroup-addon">ID</span>
-            <InputNumber
-              placeholder="ID"
-              onChange={(e) => setID(e.value)}
-            />
+            <InputNumber placeholder="ID" onChange={(e) => setID(e.value)} />
           </div>
 
           <div className="p-inputgroup flex-1">
